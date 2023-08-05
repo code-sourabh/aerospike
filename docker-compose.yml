@@ -1,45 +1,38 @@
+version: '3'
+
 services:
-    aerospikedb:
-        image: aerospike/aerospike-server:latest
-        container_name: aerospikedb1
-        networks:
-        - aerospikenetwork
-        labels:
-            com.aerospike.description: "assignment"
-        command: [ "--config-file","/run/secrets/aerospike.conf"]
-        volumes:
-        - ./data:/opt/aerospike/data/
-        secrets:
-        - source: conffile
-          target: aerospike.conf
-    
-    meshworker:
-        image: aerospike/aerospike-tools:3.15.0.3
-        container_name: meshworker1
-        networks:
-        - aerospikenetwork
-        depends_on:
-        - aerospikedb
-        entrypoint:
-        - /run/secrets/discovery
-        - "--servicename"
-        - aerospikedb
-        - "-i"
-        - "5"
-        - "-v"
-        secrets:
-        - source: discoveryfile
-          target: discovery
+  node1:
+    image: aerospike:v1
+    container_name: node1
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+      - "3003:3003"
+    volumes:
+      - ../aero-data/data:/opt/aerospike/data
+    command: ["asd", "--foreground"]
 
-networks:
-  aerospikenetwork:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.17.0.0/24
+  node2:
+    image: aerospike:v1
+    container_name: node2
+    ports:
+      - "3004:3000"
+      - "3005:3001"
+      - "3006:3002"
+      - "3007:3003"
+    volumes:
+      - ../aero-data/data:/opt/aerospike/data
+    command: ["asd", "--foreground"]
 
-secrets:
-    conffile:
-        file: ./aerospike.conf
-    discoveryfile:
-        file: ./discovery.py
+  node3:
+    image: aerospike:v1
+    container_name: node3
+    ports:
+      - "3008:3000"
+      - "3009:3001"
+      - "3010:3002"
+      - "3011:3003"
+    volumes:
+      - ../aero-data/data:/opt/aerospike/data
+    command: ["asd", "--foreground"]
