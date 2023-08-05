@@ -1,6 +1,7 @@
 services:
     aerospikedb:
         image: aerospike/aerospike-server:latest
+        
         networks:
         - aerospikenetwork
         labels:
