@@ -1,7 +1,7 @@
 services:
     aerospikedb:
         image: aerospike/aerospike-server:latest
-        
+
         networks:
         - aerospikenetwork
         labels:
@@ -30,7 +30,7 @@ services:
         secrets:
         - source: discoveryfile
           target: discovery
-#          mode: 0750
+         mode: 0750
 
 networks:
   aerospikenetwork:
