@@ -30,7 +30,7 @@ services:
         secrets:
         - source: discoveryfile
           target: discovery
-         mode: 0750
+          mode: 0750
 
 networks:
   aerospikenetwork:
