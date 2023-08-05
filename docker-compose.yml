@@ -1,7 +1,7 @@
 services:
     aerospikedb:
         image: aerospike/aerospike-server:latest
-
+        container-name: aerospikedb1
         networks:
         - aerospikenetwork
         labels:
@@ -15,6 +15,7 @@ services:
     
     meshworker:
         image: aerospike/aerospike-tools:3.15.0.3
+        container-name: meshworker1
         networks:
         - aerospikenetwork
         depends_on:
